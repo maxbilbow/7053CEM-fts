@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "extends": {
+    "existingJavaType": "uk.ac.coventry.bilbowm.fts.model.AbstractUser"
+  },
+  "javaxAnnotations": {
+    "@Table": {
+      "name": "user"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "username": {
+      "javaxAnnotations": {
+        "@Id": true
+      },
+      "type": "string",
+      "minLength": 1
+    },
+    "email": {
+      "javaxAnnotations": true,
+      "type": "string"
+    },
+    "contract": {
+      "javaxAnnotations": {
+        "@Column": {
+          "name": "bum",
+          "unique": false
+        }
+      },
+      "type": "string"
+    }
+  }
+}
