@@ -359,3 +359,7 @@ buildNumber.properties
 .mvn/wrapper/maven-wrapper.jar
 *.iml
 .idea/
+
+**/__pycache__
+/fts-server/build
+venv

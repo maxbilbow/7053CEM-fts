@@ -1,0 +1,22 @@
+[
+  {
+    "id": "ChIJtyJuZVGxcEgRiQZPVvVg9gQ",
+    "title": "Foo",
+    "prerequisites": {
+      "faceCoverings": 0,
+      "socialDistancing": 0,
+      "hygiene": 0
+    },
+    "outcomes": ["A", "B", "C"]
+  },
+  {
+    "id": "2",
+    "title": "Bar",
+    "prerequisites": {
+      "faceCoverings": 0,
+      "socialDistancing": 0,
+      "hygiene": 0
+    },
+    "outcomes": ["X", "Y", "Z"]
+  }
+]

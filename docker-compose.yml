@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  fts-server:
+    container_name: fts-server
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./fts-server:/fts-server
+    environment:
+      FLASK_ENV: development
+  redis:
+    image: "redis:alpine"

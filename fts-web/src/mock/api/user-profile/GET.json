@@ -1,0 +1,7 @@
+{
+  "name": "Bob",
+  "skills": {"A": 0},
+  "history": {
+    "courses": []
+  }
+}
