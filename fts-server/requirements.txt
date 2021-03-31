@@ -1,10 +1,11 @@
 flask==1.1.2
 flask-injector==0.12.3
-mock==4.0.2
+mock==4.0.3
 deprecated==1.2.12
-dnspython==2.0.0
+dnspython==2.1.0
 flask_api==2.0
-flask_testing==0.8.0
+flask_testing==0.8.1
 passlib==1.7.4
 # redis
 pymongo
+pyyaml

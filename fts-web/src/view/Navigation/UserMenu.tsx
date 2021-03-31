@@ -13,7 +13,7 @@ export default class UserMenu extends React.Component<{}, State> {
     constructor(props: any) {
         super(props);
         this.state = {result: false};
-        this.checkAuth();
+        this.checkAuth().catch(console.error);
     }
 
     private async checkAuth() {
@@ -23,7 +23,7 @@ export default class UserMenu extends React.Component<{}, State> {
 
     render() {
         let menu: JSX.Element;
-        if (this.state.result) {
+        if (UserService.IS_LOGGED_IN) {
             const title = (<FontAwesomeIcon icon={faUserCircle}/>);
             menu = (
                 <NavDropdown id="user-menu" title={title} alignRight={true}>
@@ -31,7 +31,6 @@ export default class UserMenu extends React.Component<{}, State> {
                     <NavDropdown.Item href="/logout">Log Out</NavDropdown.Item>
                 </NavDropdown>
             )
-
         } else {
             menu = (
                 <Nav.Link href="/login">Log In</Nav.Link>

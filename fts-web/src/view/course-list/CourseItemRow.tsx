@@ -5,7 +5,7 @@ export default function CourseItemRow(props: { course: Course }) {
     const {title, outcomes, prerequisites} = props.course;
     return (
         <tr>
-            <td>{title}</td><td>{outcomes.join(", ")}</td><td>{Object.keys(prerequisites).join(", ")}</td>
+            <td>{title}</td><td>{outcomes?.join(", ")}</td><td>{prerequisites?.map(o => JSON.stringify(o)).join(", ")}</td>
         </tr>
     );
 }

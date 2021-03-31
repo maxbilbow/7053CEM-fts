@@ -9,5 +9,31 @@ services:
       - ./fts-server:/fts-server
     environment:
       FLASK_ENV: development
-  redis:
-    image: "redis:alpine"
+    depends_on:
+      - mongodb
+    links:
+      - mongodb
+    networks:
+      - backend
+
+#  redis:
+#    image: "redis:alpine"
+
+  mongodb:
+    container_name: dis_mongodb
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+    ports:
+      - 27018:27017
+    expose:
+      - 27017
+    volumes:
+      - ./.mongodb:/data/db
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge

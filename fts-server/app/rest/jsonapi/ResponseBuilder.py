@@ -1,4 +1,5 @@
-from rest.jsonapi.JsonApi import success_response
+from app.rest.jsonapi.JsonApi import success_response
+
 
 class ResponseBuilder:
     @staticmethod

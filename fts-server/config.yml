@@ -1,0 +1,10 @@
+database:
+  name: fts_alpha
+  table:
+    users: users
+    courses: courses
+
+  mongodb:
+    credentials: root:password@mongodb
+    port: 27017
+

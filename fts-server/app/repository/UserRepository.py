@@ -1,19 +1,21 @@
 from injector import singleton, inject
-from app.database.mongo import Database
+from app.database.Database import Database
 import uuid
 
-TABLE = "user"
+from app.repository.AbstractRepository import AbstractRepository, TableConfig
+from config import Config
+
+TABLE = Config.get("database.table.users")
 
 @singleton
-class UserRepository:
+class UserRepository(AbstractRepository):
     @inject
     def __init__(self, database: Database):
-        self.database = database
+        super().__init__(database, TableConfig(TABLE))
 
     def create_user(self, user: dict):
         user["id"] = uuid.uuid4().hex
-        return self.database.insert(TABLE, user)
+        return self.insert(user)
 
     def find_user_by_email(self, email: str) -> dict:
-        user = self.database.find_one_by_props(TABLE, {"email": email})
-        return user
+        return self.find_one_by_props({"email": email})

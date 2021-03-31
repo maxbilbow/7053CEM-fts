@@ -30,6 +30,7 @@ export default class UserService {
                 const status: AuthStatus = await response.json();
                 authenticated = status.authenticated;
             }
+            logger.info(`Authenticated: ${authenticated}`);
         } catch (e) {
             console.error("Unable to determine authentication state", e);
         }

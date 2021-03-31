@@ -363,3 +363,6 @@ buildNumber.properties
 **/__pycache__
 /fts-server/build
 venv
+
+# Temporary files
+/.*

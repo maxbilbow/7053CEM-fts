@@ -1,5 +1,5 @@
 # AuthenticationController.py
-from app.config import app
+from app.flask_app import app
 from flask import request, render_template, jsonify, redirect
 from flask_api import status
 from injector import inject
@@ -7,6 +7,7 @@ from app.service.AuthService import AuthService
 from app.sdp_errors import AuthError
 import logging
 from app.rest.decorators import logout_required, login_required
+
 
 @app.route("/auth/status", methods=["GET"])
 def get_auth_status():
@@ -20,10 +21,12 @@ def get_auth_status():
             "authenticated": False
         })
 
+
 @app.route("/login")
 @logout_required
 def get_login_page():
     return render_template("login.html")
+
 
 @app.route("/register")
 @logout_required
@@ -67,6 +70,7 @@ def login(auth_service: AuthService):
             }
         }), status.HTTP_500_INTERNAL_SERVER_ERROR
 
+
 @inject
 @logout_required
 @app.route('/auth/register', methods=['POST'])
@@ -79,12 +83,12 @@ def register(auth_service: AuthService):
         )
         return get_auth_status(), status.HTTP_201_CREATED
     except AuthError as ae:
-        logging.error(ae)
+        logging.exception("Authentication Error")
         return jsonify({
             "error": str(ae)
         }), status.HTTP_400_BAD_REQUEST
     except Exception as e:
-        logging.error(e)
+        logging.exception(e)
         return jsonify({
             "error": str(e)
         }), status.HTTP_500_INTERNAL_SERVER_ERROR

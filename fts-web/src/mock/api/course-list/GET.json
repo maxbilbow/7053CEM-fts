@@ -2,21 +2,13 @@
   {
     "id": "ChIJtyJuZVGxcEgRiQZPVvVg9gQ",
     "title": "Foo",
-    "prerequisites": {
-      "faceCoverings": 0,
-      "socialDistancing": 0,
-      "hygiene": 0
-    },
+    "prerequisites": [],
     "outcomes": ["A", "B", "C"]
   },
   {
     "id": "2",
     "title": "Bar",
-    "prerequisites": {
-      "faceCoverings": 0,
-      "socialDistancing": 0,
-      "hygiene": 0
-    },
+    "prerequisites": [],
     "outcomes": ["X", "Y", "Z"]
   }
 ]

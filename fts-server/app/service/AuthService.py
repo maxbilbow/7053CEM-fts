@@ -29,10 +29,10 @@ class AuthService:
         if self.repository.find_user_by_email(email):
             raise AuthError("Email address already in use")
 
-        if self.repository.create_user(user):
-            return self.start_session(user)
+        if self.repository.create_user(user) is None:
+            raise AuthError("Failed to create new user")
 
-        raise Exception("Signup failed")
+        return self.start_session(user)
 
     def logout(self):
         session.clear()
@@ -44,7 +44,7 @@ class AuthService:
         if user and pbkdf2_sha256.verify(password, user['password']):
             return self.start_session(user)
 
-        return AuthError("Invalid login credentials")
+        raise AuthError("Invalid login credentials")
 
     @staticmethod
     def get_authenticated_user():
