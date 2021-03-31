@@ -19,7 +19,7 @@ class AuthenticatedUserRepository(AbstractRepository):
 
     @staticmethod
     def to_dict(d: AuthenticatedUser) -> dict:
-        return AuthenticatedUser.to_dict(d)
+        return d.to_dict()
 
     @inject
     def __init__(self, database: Database):

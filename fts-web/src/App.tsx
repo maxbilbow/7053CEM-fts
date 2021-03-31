@@ -9,6 +9,7 @@ import licensing from "./view/Licensing";
 import CourseListView from "./view/course-list/CourseListView";
 import UserProfileView from "./view/user-profile/UserProfileView";
 import LoginView from "./view/auth/LoginView";
+import CourseInfoView from "./view/course-info/CourseInfoView";
 
 UserService.checkAuthStatus()
     .then((r) => console.log("Logged in:", r))
@@ -29,6 +30,7 @@ export default function App() {
                         </Route>
                         <Route path="/licensing" component={licensing}/>
                         <Route path="/course-list" component={CourseListView}/>
+                        <Route path="/course-info/:id" component={CourseInfoView}/>
                         <Route path="/user-profile" component={UserProfileView}/>
                         <Route path="/login" component={LoginView}/>
                     </Container>

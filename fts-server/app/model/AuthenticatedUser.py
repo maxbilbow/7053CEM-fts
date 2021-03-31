@@ -1,9 +1,6 @@
 from __future__ import annotations
-from flask import jsonify
-from typing import List, Optional
+from typing import Optional
 from app.model.AbstractEntity import AbstractEntity
-from app.model.Competency import Competency
-from app.model.User import User
 
 
 class AuthenticatedUser(AbstractEntity):
@@ -22,7 +19,6 @@ class AuthenticatedUser(AbstractEntity):
             user.id = d["id"]
         return user
 
-    @staticmethod
     def to_dict(self) -> dict:
         u_dict = dict(
             id=self.id,

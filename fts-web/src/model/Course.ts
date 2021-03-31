@@ -1,6 +1,9 @@
 export interface Course {
     id: string;
+    trainingManagerId?: string;
     title: string;
-    prerequisites: {skillId: string, level: number}[];
+    synopsis: string;
+    startTime: number;
+    prerequisites: string[];
     outcomes: string[];
 }

@@ -1,29 +1,33 @@
 import logging
 
-from app.database.mongo import Database
-from app.flask_app import app
 from injector import inject
-import os
-from flask_api import status
-import time
 
-from app.model.TrainingEvent import TrainingEvent
+from app.database.MongoDB import MongoDb
+from app.flask_app import app
 from app.repository.TrainingEventRepository import TrainingEventRepository
+from app.rest.decorators import dev_only
+
+
+@inject
+@app.route("/test/drop/<collection>", methods=['GET'])
+@dev_only
+def drop_all(collection: str):
+    MongoDb()._db.drop_collection(collection)
+
+    return "DONE"
 
 
 @inject
 @app.route("/test/add-course/<title>", methods=['GET'])
+@dev_only
 def add_to_db(repo: TrainingEventRepository, title: str):
-    if os.environ.get('FLASK_ENV') != 'development':
-        return "NOT ALLOWED", status.HTTP_403_FORBIDDEN
-
     print("inserting %s" % title)
     try:
         te_dict = {
             "id": title.lower(),
             "title": title,
-            "outcomes": [{"skillId": "D", "level": 2}],
-            "prerequisites": [{"skillId": "D", "level": 1}]
+            "outcomes": ["A"],
+            "prerequisites": ["A", "B", "c"]
         }
         res = repo._table.update(te_dict)
         print(res)

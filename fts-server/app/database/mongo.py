@@ -5,7 +5,7 @@ from flask import jsonify
 from injector import singleton
 import uuid
 
-from typing import Callable
+from typing import Callable, Iterable
 
 from app.database.MongoDB import MongoDb
 from app.database.Database import Database
@@ -63,7 +63,7 @@ class MongoDatabase(Database):
         table = MongoDb.table(table_name)
         return table.delete_one(table, {"id": entity_id})
 
-    def find_all(self, table_name: str):
+    def find_all(self, table_name: str) -> Iterable:
         table = MongoDb.table(table_name)
-        return list(table.find(projection={"_id": 0}))
+        return table.find(projection={"_id": 0})
 

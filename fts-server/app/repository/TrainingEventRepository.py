@@ -17,7 +17,7 @@ class TrainingEventRepository(AbstractRepository):
 
     @staticmethod
     def to_dict(te: TrainingEvent) -> dict:
-        return TrainingEvent.to_dict(te)
+        return te.to_dict()
 
     @inject
     def __init__(self, database: Database):

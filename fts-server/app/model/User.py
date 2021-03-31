@@ -2,16 +2,17 @@ from __future__ import annotations
 from flask import jsonify
 from typing import List, Optional
 from app.model.AbstractEntity import AbstractEntity
-from app.model.Competency import Competency
 
 
 class User(AbstractEntity):
     id: str
     email: str
-    competencies: List[Competency]
+    name: str
+    competencies: List[str]
     interests: List[str]
 
     def __init__(self):
+        self.name = ""
         self.competencies = list()
         self.interests = list()
 
@@ -20,17 +21,18 @@ class User(AbstractEntity):
         user = User()
         user.id = d["id"]
         user.email = d["email"]
+        if "name" in d:
+            user.name = d["name"]
         if "competencies" in d:
-            user.competencies = map(lambda c: Competency.from_dict(c), d["competencies"])
+            user.competencies = d["competencies"]
         if "interests" in d:
             user.interests = d["interests"]
         return user
 
-    @staticmethod
     def to_dict(self) -> dict:
         return dict(
             email=self.email,
-            competencies=list(map(lambda c: c.to_dict(), self.competencies)),
+            competencies=self.competencies,
             interests=self.interests
         )
 
@@ -42,5 +44,5 @@ if __name__ == "__main__":
     print(o.to_dict())
 
     o = User.from_dict(
-        {"id": "abc", "email": "a", "interests": ["a"], "competencies": [{"skillId": "A", "level": "3"}]})
+        {"id": "abc", "email": "a", "interests": ["a"], "competencies": ["A", "B"]})
     print(o.to_dict())

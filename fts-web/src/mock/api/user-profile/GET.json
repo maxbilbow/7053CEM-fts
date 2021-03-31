@@ -1,7 +1,6 @@
 {
   "name": "Bob",
-  "skills": {"A": 0},
-  "history": {
-    "courses": []
-  }
+  "skills": ["A"],
+  "interests": ["B", "C"],
+  "email": "bob@bob.bob"
 }

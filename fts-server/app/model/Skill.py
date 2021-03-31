@@ -1,9 +1,6 @@
 from __future__ import annotations
 
-from abc import abstractproperty, abstractmethod
 from typing import List
-
-from flask import jsonify
 
 from app.model.AbstractEntity import AbstractEntity
 
@@ -25,7 +22,6 @@ class Skill(AbstractEntity):
             skill.aliases = d["aliases"]
         return skill
 
-    @staticmethod
     def to_dict(self: Skill) -> dict:
         return dict(
             id=self.id,

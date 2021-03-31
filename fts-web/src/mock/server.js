@@ -8,6 +8,7 @@ const app = express();
 console.log(__dirname);
 
 app.use("/api", apiMocker("src/mock/api"));
+app.use("/auth", apiMocker("src/mock/auth"));
 app.use(serveStatic(`${__dirname}/../../build`))
 console.log(`Mock API Server is up and running at: http://localhost:${port}`);
 app.listen(port);

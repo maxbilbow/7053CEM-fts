@@ -25,7 +25,7 @@
     "ts-node": "^9.0.0",
     "typescript": "^3.8.3"
   },
-  "proxy": "http://localhost:9000",
+  "proxy": "http://localhost:5000",
   "scripts": {
     "start": "react-scripts start",
     "lint": "eslint --ext .jsx --ext .js --ext .tsx --ext .ts src/",

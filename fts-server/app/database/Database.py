@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Callable, Optional, List
+from typing import Callable, Optional, List, Iterable
 from abc import abstractmethod
 
 
@@ -20,7 +20,7 @@ class Database:
         pass
 
     @abstractmethod
-    def find_many_by_props(self, table_name: str, props: dict) -> list:
+    def find_many_by_props(self, table_name: str, props: dict) -> Iterable[dict]:
         pass
 
     @abstractmethod
@@ -32,11 +32,11 @@ class Database:
         pass
 
     @abstractmethod
-    def find_many_by_id_list(self, table_name: str, id_list: list) -> list:
+    def find_many_by_id_list(self, table_name: str, id_list: list) -> Iterable[dict]:
         pass
 
     @abstractmethod
-    def find_all(self, table_name: str) -> list:
+    def find_all(self, table_name: str) -> Iterable[dict]:
         pass
 
     @abstractmethod
@@ -58,7 +58,7 @@ class DbTable:
     def find_one_by_props(self, props: dict) -> Optional[dict]:
         return self.__db.find_one_by_props(self.__table_name, props)
 
-    def find_many_by_props(self, props: dict) -> list:
+    def find_many_by_props(self, props: dict) -> Iterable[dict]:
         return self.__db.find_many_by_props(self.__table_name, props)
 
     def insert(self, entity: dict) -> str:
@@ -67,7 +67,7 @@ class DbTable:
     def update(self, entity: dict) -> object:
         return self.__db.update(self.__table_name, entity)
 
-    def find_many_by_id_list(self, id_list: list) -> list:
+    def find_many_by_id_list(self, id_list: list) -> Iterable[dict]:
         return self.__db.find_many_by_id_list(self.__table_name, id_list)
 
     def find_all(self):

@@ -2,7 +2,7 @@ database:
   name: fts_alpha
   table:
     users: users
-    courses: training_events3
+    courses: training_events
     skills: skills
     bookings: bookings
 

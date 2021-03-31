@@ -1,0 +1,22 @@
+[
+  {
+    "id": "java",
+    "displayName": "Java",
+    "aliases": []
+  },
+  {
+    "id": "python",
+    "displayName": "Python",
+    "aliases": ["py", "python"]
+  },
+  {
+    "id": "javascript",
+    "displayName": "JavaScript",
+    "aliases": ["js", "javascript"]
+  },
+  {
+    "id": "cpp",
+    "displayName": "C++",
+    "aliases": ["cpp", "c++"]
+  }
+]

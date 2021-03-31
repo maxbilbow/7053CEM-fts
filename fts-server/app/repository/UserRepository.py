@@ -20,7 +20,7 @@ class UserRepository(AbstractRepository):
 
     @staticmethod
     def to_dict(u: User) -> dict:
-        return User.to_dict(u)
+        return u.to_dict()
 
     @inject
     def __init__(self, database: Database):

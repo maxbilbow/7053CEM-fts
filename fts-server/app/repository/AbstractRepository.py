@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from typing import Generic, TypeVar, Optional, List, Generator
+from typing import Generic, TypeVar, Optional, List, Generator, Iterable
 
 from app.database.Database import DbTable
 from app.database.mongo import Database
@@ -38,15 +38,15 @@ class AbstractRepository(Generic[Entity]):
         d = self._table.find_by_id(key)
         return None if d is None else self.from_dict(d)
 
-    def find_with_id_list(self, id_list: List[Entity]) -> List[Entity]:
-        return self._table.find_many_by_id_list(id_list)
+    def find_with_id_list(self, id_list: List[Entity]) -> Iterable[Entity]:
+        return self.__dict_generator(self._table.find_many_by_id_list(id_list))
 
     def find_one_by_props(self, props: dict) -> Optional[Entity]:
         d = self._table.find_one_by_props(props)
         return self.from_dict(d) if d else None
 
-    def find_many_by_props(self, props: dict) -> List[Entity]:
-        return self._table.find_many_by_props(props)
+    def find_many_by_props(self, props: dict) -> Iterable[Entity]:
+        return self.__dict_generator(self._table.find_many_by_props(props))
 
     def insert(self, entity: Entity) -> str:
         return self._table.insert(self.to_dict(entity))
@@ -58,17 +58,20 @@ class AbstractRepository(Generic[Entity]):
         d = self._table.find_by_id(entity_id)
         return None if d is None else self.from_dict(d)
 
-    def find_all(self) -> Generator[Entity, None, None]:
+    def find_all(self) -> Iterable[Entity]:
+        return self.__dict_generator(self._table.find_all())
+
+    def delete_by_id(self, entity_id: str) -> object:
+        return self._table.delete_by_id(entity_id)
+
+    def __dict_generator(self, it: Iterable[dict]) -> Generator[Entity, None, None]:
         from_dict = self.from_dict
 
         def gen(results):
             for o in results:
                 yield from_dict(o)
 
-        return gen(self._table.find_all())
-
-    def delete_by_id(self, entity_id: str) -> object:
-        return self._table.delete_by_id(entity_id)
+        return gen(it)
 
 
 if __name__ == "__main__":

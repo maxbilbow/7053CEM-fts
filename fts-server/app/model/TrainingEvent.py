@@ -5,8 +5,6 @@ from typing import List, Optional
 from flask import jsonify
 
 from app.model.AbstractEntity import AbstractEntity
-from app.model.Competency import Competency
-from app.model.User import User
 
 
 class TrainingEvent(AbstractEntity):
@@ -15,9 +13,8 @@ class TrainingEvent(AbstractEntity):
     start_time: int
     title: str
     synopsis: str
-    prerequisites: List[Competency]
-    outcomes: List[Competency]
-    attendees: Optional[List[User]]
+    prerequisites: List[str]
+    outcomes: List[str]
 
     def __init__(self, title: str, id=None):
         self.id = id
@@ -38,10 +35,9 @@ class TrainingEvent(AbstractEntity):
         if "startTime" in d:
             te.start_time = d["startTime"]
         if "prerequisites" in d:
-            pr = d["prerequisites"]
-            te.prerequisites = list(map(lambda o: Competency.from_dict(o), pr))
+            te.prerequisites = d["prerequisites"]
         if "outcomes" in d:
-            te.outcomes = list(map(lambda c: Competency.from_dict(c), d["outcomes"]))
+            te.outcomes = d["outcomes"]
 
         return te
 
@@ -51,15 +47,14 @@ class TrainingEvent(AbstractEntity):
         del u_dict["id"]
         return jsonify(u_dict)
 
-    @staticmethod
     def to_dict(self) -> dict:
         u_dict = dict(
             id=self.id,
             title=self.title,
             synopsis=self.synopsis,
             startTime=self.start_time,
-            prerequisites=list(map(lambda c: c.to_dict(c), self.prerequisites)),
-            outcomes=list(map(lambda c: c.to_dict(c), self.outcomes))
+            prerequisites=self.prerequisites,
+            outcomes=self.outcomes
         )
         return u_dict
 
@@ -68,7 +63,7 @@ if __name__ == "__main__":
     te = TrainingEvent.from_dict({
             "id": "title.lower()",
             "title": "TITLE",
-            "outcomes": [{"skillId": "D", "level": 2}],
-            "prerequisites": [{"skillId": "D", "level": 1}]
+            "outcomes": ["A", "B"],
+            "prerequisites": ["C", "D"]
         })
-    print(te.to_dict(te))
+    print(te.to_dict())
