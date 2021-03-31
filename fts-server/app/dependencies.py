@@ -1,7 +1,7 @@
 from injector import singleton
 
 # Import rest endpoints
-import app.rest.CourseResource
+import app.rest.TrainingEventResource
 import app.rest.IndexController
 import app.rest.DbRestTest
 import app.rest.AuthController

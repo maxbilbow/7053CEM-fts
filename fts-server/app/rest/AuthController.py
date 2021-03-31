@@ -12,7 +12,7 @@ from app.rest.decorators import logout_required, login_required
 @app.route("/auth/status", methods=["GET"])
 def get_auth_status():
     user = AuthService.get_authenticated_user()
-    if user:
+    if user is not None:
         return jsonify({
             "authenticated": True
         })
@@ -47,7 +47,7 @@ def logout(auth_service: AuthService):
 @app.route('/auth/login', methods=['POST'])
 def login(auth_service: AuthService):
     try:
-        user = auth_service.login(
+        auth_service.login(
             request.form.get('email'),
             request.form.get('password')
         )

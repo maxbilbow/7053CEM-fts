@@ -1,55 +1,22 @@
-from typing import Callable
+from __future__ import annotations
+from typing import Callable, Optional, List
 from abc import abstractmethod
-
-
-class DbTable:
-    @abstractmethod
-    def find_by_id(self, entity_id: str) -> dict:
-        pass
-
-    @abstractmethod
-    def find_one_by_props(self, props: dict) -> dict:
-        pass
-
-    @abstractmethod
-    def find_many_by_props(self, props: dict) -> list:
-        pass
-
-    @abstractmethod
-    def insert(self, entity: dict) -> str:
-        pass
-
-    @abstractmethod
-    def update(self, entity: dict) -> object:
-        pass
-
-    @abstractmethod
-    def find_many_by_id_list(self, id_list: list) -> list:
-        pass
-
-    @abstractmethod
-    def find_all(self):
-        pass
-
-    @abstractmethod
-    def delete_by_id(self, entity_id: str) -> object:
-        pass
 
 
 class Database:
     def on(self, table_name: str) -> DbTable:
-        return _DbTableImpl(table_name, self)
+        return DbTable(table_name, self)
 
     @abstractmethod
     def transaction(self, fn: Callable[[], None]):
         pass
 
     @abstractmethod
-    def find_by_id(self, table_name: str, key: str) -> dict:
+    def find_by_id(self, table_name: str, key: str) -> Optional[dict]:
         pass
 
     @abstractmethod
-    def find_one_by_props(self, table_name: str, props: dict) -> dict:
+    def find_one_by_props(self, table_name: str, props: dict) -> Optional[dict]:
         pass
 
     @abstractmethod
@@ -77,7 +44,7 @@ class Database:
         pass
 
 
-class _DbTableImpl(DbTable):
+class DbTable:
     __table_name: str
     __db: Database
 
@@ -85,10 +52,10 @@ class _DbTableImpl(DbTable):
         self.__table_name = table_name
         self.__db = database
 
-    def find_by_id(self, key: str) -> dict:
+    def find_by_id(self, key: str) -> Optional[dict]:
         return self.__db.find_by_id(self.__table_name, key)
 
-    def find_one_by_props(self, props: dict) -> dict:
+    def find_one_by_props(self, props: dict) -> Optional[dict]:
         return self.__db.find_one_by_props(self.__table_name, props)
 
     def find_many_by_props(self, props: dict) -> list:

@@ -54,8 +54,6 @@ class MongoDatabase(Database):
     def insert(self, table_name: str, entity: dict) -> str:
         if "id" in entity:
             entity["_id"] = entity["id"]
-        else:
-            entity["_id"] = entity["id"] = uuid.uuid4().hex
 
         table = MongoDb.table(table_name)
         logging.info("into table: {}", table)

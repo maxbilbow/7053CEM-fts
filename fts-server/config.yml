@@ -2,7 +2,9 @@ database:
   name: fts_alpha
   table:
     users: users
-    courses: courses
+    courses: training_events3
+    skills: skills
+    bookings: bookings
 
   mongodb:
     credentials: root:password@mongodb
