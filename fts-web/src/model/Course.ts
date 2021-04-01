@@ -6,4 +6,5 @@ export interface Course {
     startTime: number;
     prerequisites: string[];
     outcomes: string[];
+    relevance: number;
 }

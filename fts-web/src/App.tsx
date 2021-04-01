@@ -23,7 +23,7 @@ export default function App() {
                    <NavBar/>
                 </header>
 
-                <div className="content text-center">
+                <div className="content">
                     <Container>
                         <Route exact path="/">
                             Hi

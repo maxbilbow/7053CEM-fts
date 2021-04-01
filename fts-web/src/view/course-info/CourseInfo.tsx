@@ -1,8 +1,7 @@
 import React from "react";
 import {Course} from "../../model/Course";
-import {useParams} from "react-router-dom";
 import LoggerFactory from "../../service/LoggerFactory";
-import * as stream from "stream";
+import {Button} from "react-bootstrap";
 
 const logger = LoggerFactory.getLogger("CourseInfoView")
 export default class CourseInfo extends React.Component<{ id: string }, { course?: Course }> {
@@ -23,12 +22,15 @@ export default class CourseInfo extends React.Component<{ id: string }, { course
         this._load().catch(logger.error)
     }
 
+    register = () => alert("not implemented")
+
     render() {
         if (!this.state.course) {
             return (<>Not Yet</>)
         }
-        const {id, title, outcomes, prerequisites, startTime, synopsis} = this.state.course;
+        const {title, outcomes, prerequisites, startTime, synopsis} = this.state.course;
         const date = new Date(startTime)
+
         return (
             <div>
                 <div>Title: {title}</div>
@@ -42,8 +44,19 @@ export default class CourseInfo extends React.Component<{ id: string }, { course
                         {synopsis}
                     </div>
                 </div>
-                <div><a href={`/course-info/${id}`}>Register</a></div>
+                <div>
+                    <Button variant="primary" type="submit" onClick={this.register} disabled={CourseInfo.isDisabled(date)}>
+                        Register
+                    </Button>
+                </div>
             </div>
         );
+    }
+
+    private static isDisabled(date: Date) {
+        // To calculate the time difference of two dates
+        const difference_In_Time = date.getTime() - new Date().getTime();
+        const difference_In_Days = difference_In_Time / (1000 * 3600 * 24);
+        return difference_In_Days < 1
     }
 }
