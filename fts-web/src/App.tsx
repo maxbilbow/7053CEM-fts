@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css"
 import React from "react";
 import {Container} from 'react-bootstrap';
-import {BrowserRouter, Link, Route} from "react-router-dom";
+import {BrowserRouter, Link, Route, Redirect} from "react-router-dom";
 import "./App.css";
 import UserService from "./service/UserService";
 import NavBar from "./view/Navigation/NavBar";
@@ -26,7 +26,7 @@ export default function App() {
                 <div className="content">
                     <Container>
                         <Route exact path="/">
-                            Hi
+                            <Redirect to="/course-list"/>
                         </Route>
                         <Route path="/licensing" component={licensing}/>
                         <Route path="/course-list" component={CourseListView}/>
@@ -37,13 +37,10 @@ export default function App() {
                 </div>
 
                 <div className="footer">
-                    MADE WITH LOVE BY COVENTRY UNIVERSITY STUDENTS
-                    <br/>
-                    Copyright © 2020 |
+                    Copyright © 2021 |
                     <Link className="footer-link" to="/licensing">Licensing</Link>
                 </div>
             </BrowserRouter>
-
         </div>
     );
 }

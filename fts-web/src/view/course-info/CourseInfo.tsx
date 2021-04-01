@@ -1,7 +1,7 @@
 import React from "react";
 import {Course} from "../../model/Course";
 import LoggerFactory from "../../service/LoggerFactory";
-import {Button} from "react-bootstrap";
+import {Button, Col, Container, Form, Row} from "react-bootstrap";
 
 const logger = LoggerFactory.getLogger("CourseInfoView")
 export default class CourseInfo extends React.Component<{ id: string }, { course?: Course }> {
@@ -32,24 +32,61 @@ export default class CourseInfo extends React.Component<{ id: string }, { course
         const date = new Date(startTime)
 
         return (
-            <div>
-                <div>Title: {title}</div>
-                <div>Outcomes: {outcomes?.join(", ")}</div>
-                <div>Prerequisites: {prerequisites?.map(o => JSON.stringify(o)).join(", ")}</div>
-                <div>Date: {date.toLocaleDateString()}, Time: {date.toLocaleTimeString()}</div>
-
-                <div>
-                    <h4>Synopsis</h4>
-                    <div>
+            <Container>
+                <Row>
+                    <Col className={"courseInfo__label"}>
+                        Title
+                    </Col>
+                    <Col xs={9}>
+                        {title}
+                    </Col>
+                </Row>
+                <Row>
+                    <Col className={"courseInfo__label"}>
+                        {"Outcomes"}
+                    </Col>
+                    <Col xs={9}>
+                        {outcomes?.join(", ")}
+                    </Col>
+                </Row>
+                <Row>
+                    <Col className={"courseInfo__label"}>
+                        Interests
+                    </Col>
+                    <Col xs={9}>
+                        {prerequisites?.join(", ")}
+                    </Col>
+                </Row>
+                <Row>
+                    <Col className={"courseInfo__label"}>
+                        Start Time
+                    </Col>
+                    <Col xs={9}>
+                        {date.toLocaleDateString()} at {date.toLocaleTimeString()}
+                    </Col>
+                </Row>
+                <Row>
+                    <Col className={"courseInfo__label"}>
+                        Synopsis
+                    </Col>
+                    <Col xs={9}>
                         {synopsis}
-                    </div>
-                </div>
-                <div>
-                    <Button variant="primary" type="submit" onClick={this.register} disabled={CourseInfo.isDisabled(date)}>
-                        Register
-                    </Button>
-                </div>
-            </div>
+                    </Col>
+                </Row>
+                <Row>
+                   <hr/>
+                </Row>
+                <Row>
+                    <Col className={"courseInfo__label"}>
+                    </Col>
+                    <Col xs={9}>
+                        <Button variant="primary" type="submit" onClick={this.register}
+                                disabled={CourseInfo.isDisabled(date)}>
+                            Register
+                        </Button>
+                    </Col>
+                </Row>
+            </Container>
         );
     }
 

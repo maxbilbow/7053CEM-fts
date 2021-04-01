@@ -62,3 +62,9 @@ body {
   color: gray;
   text-decoration: underline;
 }
+
+
+.courseInfo__label {
+  font-weight: bold;
+  text-align: right;
+}
