@@ -6,6 +6,9 @@ import CourseListTable from "./CourseListTable";
 import * as _ from "lodash";
 import CourseListFilter, {CourseListFilterState} from "./CourseListFilter";
 import {serialize} from "v8";
+import UserService from "../../service/UserService";
+import UserProfileService from "../../service/UserProfileService";
+import {pre} from "../../../../../../Users/MaxBilbow/anaconda3/Lib/site-packages/bokeh/server/static/js/types/core/dom";
 
 const logger = LoggerFactory.getLogger("CourseListView");
 
@@ -15,61 +18,96 @@ enum OrderBy {
 }
 
 class CourseListViewState extends CourseListFilterState {
-    courseList: Course[] = [];
+    courseList?: Course[];
+}
+
+
+interface UserInfo {
+    competencies: string[];
+    interests: string[];
 }
 
 export default class CourseListView extends React.Component<{}, CourseListViewState> {
 
     state = new CourseListViewState();
+    userProfile?: UserInfo;
 
     constructor(props: {}) {
         super(props);
-        this.update().catch(logger.error);
+    }
+
+    async componentDidMount() {
+        try {
+            await this.update();
+            if (!UserService.IS_LOGGED_IN) return;
+            const {interests, competencies} = await UserProfileService.getProfile();
+            this.userProfile = {interests, competencies};
+            this.setState({})
+        } catch (e) {
+            logger.error("Unable to retrieve user profile", e)
+        }
     }
 
     async update() {
         const response = await fetch("/api/course-list");
+        const courseList = await response.json();
         this.setState({
-            courseList: await response.json()
+            courseList
         });
     }
 
     static containsAny(tags: string[], searchTags: string[]): boolean {
-        tags = tags.map(_.snakeCase).map(_.lowerCase);
-        searchTags = searchTags.map(_.snakeCase).map(_.lowerCase);
+        tags = tags.map(_.lowerCase);
+        searchTags = searchTags.map(_.lowerCase);
 
-        return _.difference(tags, searchTags).length < tags.length;
+        for (const tag of searchTags) {
+            if (tags.includes(tag)) return true;
+        }
+        return false;//_.difference(tags, searchTags).length < tags.length;
     }
-    private filterCourseList() {
-        const {searchText, courseList, orderBy, prerequisites, outcomes} = this.state;
-        let filteredList = courseList;
+
+    private filterCourseList(filteredList: Course[]) {
+        const {searchText, orderBy, prerequisites, outcomes} = this.state;
         if (prerequisites.length) {
+            logger.info("Filtering", prerequisites)
             filteredList = filteredList.filter(course => !CourseListView.containsAny(course.prerequisites, prerequisites))
+            logger.info("Filtering", filteredList.length)
         }
         if (outcomes.length) {
+            logger.info("Filtering", outcomes)
             filteredList = filteredList.filter(course => CourseListView.containsAny(course.outcomes, outcomes))
+            logger.info("Filtering", filteredList.length)
         }
         if (searchText) {
-            filteredList = courseList.filter(({title}) => title.includes(searchText))
+            filteredList = filteredList.filter(({title}) => title.includes(searchText))
+        }
+        if (orderBy === OrderBy.Relevance) {
+            filteredList = filteredList.filter(({startTime}) => startTime < Date.now());
         }
         const order = orderBy === OrderBy.Relevance ? ["relevance", "startTime"] : ["startTime", "relevance"];
         return _.orderBy(filteredList, order);
     }
-    render() {
 
-        const orderedList = this.filterCourseList()
+    render() {
+        if (!this.state.courseList) {
+            return <>...</>
+        }
+        const orderedList = this.filterCourseList(this.state.courseList)
         return (
             <Container>
                 <Row>
                     <Col>
                         <Table>
                             <thead>
-                            <th>Filter Results</th>
+                            <tr>
+                                <th>Filter Results</th>
+                            </tr>
                             </thead>
                             <tbody>
                             <tr>
                                 <td>
-                                    <CourseListFilter onChange={filter => this.setState(filter as CourseListViewState)}/>
+                                    <CourseListFilter courseList={this.state.courseList}
+                                                      onChange={filter => this.setState(filter as CourseListViewState)}/>
                                 </td>
                             </tr>
                             </tbody>

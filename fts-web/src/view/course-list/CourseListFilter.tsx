@@ -6,8 +6,11 @@ import {Course} from "../../model/Course";
 import CourseListTable from "./CourseListTable";
 import * as _ from "lodash";
 import ReactTagInput from "@pathofdev/react-tag-input";
+import {UserProfile} from "../../model/UserProfile";
+import UserService from "../../service/UserService";
+import UserProfileService from "../../service/UserProfileService";
 
-const logger = LoggerFactory.getLogger("CourseListView");
+const logger = LoggerFactory.getLogger("CourseListFilter");
 
 enum OrderBy {
     Date = "Date",
@@ -17,13 +20,16 @@ enum OrderBy {
 export class CourseListFilterState {
     searchText = ""
     orderBy = OrderBy.Relevance;
-    outcomes: string[] = []
-    prerequisites: string[] = []
+    outcomes: string[] = [];
+    prerequisites: string[] = [];
 }
 
 interface Props {
+    courseList: Course[];
     onChange(filter: Partial<CourseListFilterState>): void;
 }
+
+
 
 export default class CourseListFilter extends React.Component<Props, CourseListFilterState> {
 
@@ -36,6 +42,13 @@ export default class CourseListFilter extends React.Component<Props, CourseListF
     updateState(state: Partial<CourseListFilterState>) {
         this.setState(state as CourseListFilterState)
         this.props.onChange(state);
+    }
+
+    componentDidMount() {
+        const {courseList} = this.props;
+        this.updateState({
+            outcomes: _.uniq(_.flatMap(courseList, "outcomes"))
+        })
     }
 
     render() {
@@ -69,22 +82,21 @@ export default class CourseListFilter extends React.Component<Props, CourseListF
                 </fieldset>
                 <Form.Row>
                     <Form.Label>Include Topics:
-                    <ReactTagInput tags={outcomes}
-                                   placeholder={"Include Topics"}
-                                   editable={false}
-                                   removeOnBackspace={true}
-                                   onChange={newTags => this.updateState({outcomes: newTags})}>
-                    </ReactTagInput>
+                        <ReactTagInput tags={outcomes}
+                                       editable={false}
+                                       removeOnBackspace={true}
+                                       onChange={newTags => this.updateState({outcomes: newTags})}>
+                        </ReactTagInput>
                     </Form.Label>
                 </Form.Row>
 
                 <Form.Row>
                     <Form.Label>Exclude Prerequisites:
-                    <ReactTagInput tags={prerequisites}
-                                   editable={false}
-                                   removeOnBackspace={true}
-                                   onChange={newTags => this.updateState({prerequisites: newTags})}>
-                    </ReactTagInput>
+                        <ReactTagInput tags={prerequisites}
+                                       editable={false}
+                                       removeOnBackspace={true}
+                                       onChange={newTags => this.updateState({prerequisites: newTags})}>
+                        </ReactTagInput>
                     </Form.Label>
                 </Form.Row>
             </Form>

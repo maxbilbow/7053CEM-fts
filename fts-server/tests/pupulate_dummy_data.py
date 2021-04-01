@@ -1,3 +1,4 @@
+from tests.words import make_sentence, SKILLS
 from app.database.MongoDB import MongoDb
 from app.database.mongo import MongoDatabase
 from app.model.Skill import Skill
@@ -12,6 +13,7 @@ from app.service.SkillService import SkillService
 from app.service.TrainingEventService import TrainingEventService
 from datetime import datetime
 import time
+import random
 
 db: MongoDatabase
 users: UserRepository
@@ -32,7 +34,7 @@ def init():
     skills = SkillService(SkillRepository(db))
     bookings = BookingRepository(db)
     event_repo = TrainingEventRepository(db)
-    event_service = TrainingEventService(event_repo, AuthService(auth_repo))
+    event_service = TrainingEventService(event_repo, AuthService(auth_repo), users)
 
 
 def clear_all():
@@ -73,6 +75,25 @@ def populate_skills():
     skills.add_skill("photography")
     skills.add_skill("ukulele")
     skills.add_skill("chess")
+
+
+def generate_random_courses(manager_id):
+    now = int(round(time.time() * 1000))
+    ONE_DAY = 86400000
+
+    for i in range(100):
+        event = TrainingEvent(title=make_sentence(5))
+        event.synopsis = make_sentence(30)
+        event.start_time = now + ONE_DAY * random.randint(-7, 50)
+        for i in range(random.randint(0, 3)):
+            event.outcomes.append(random.choice(SKILLS))
+        for i in range(random.randint(0, 3)):
+            event.prerequisites.append(random.choice(SKILLS))
+
+        event.outcomes = list(set(event.outcomes))
+        event.prerequisites = list(set(event.prerequisites))
+        event.training_manager_id = manager_id
+        event_repo.insert(event)
 
 
 def populate_events(manager_id: str):
@@ -122,6 +143,7 @@ def start(credentials, port):
     populate_skills()
     manager_id = populate_users()
     populate_events(manager_id)
+    generate_random_courses(manager_id)
 
 
 if __name__ == "__main__":

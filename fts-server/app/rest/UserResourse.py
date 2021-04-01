@@ -15,7 +15,7 @@ logger = logging.getLogger("UserResource")
 @app.route("/api/user-profile", methods=["GET"])
 @login_required
 def get_user_profile(service: UserService):
-    return jsonify(service.get_profile()), status.HTTP_200_OK
+    return jsonify(service.get_profile().to_dict()), status.HTTP_200_OK
 
 
 @inject

@@ -23,8 +23,8 @@ class UserService:
             raise Exception("user not found")
         return user
 
-    def get_profile(self) -> dict:
-        return self.__get_profile().to_dict()
+    def get_profile(self) -> User:
+        return self.__get_profile()
 
     def update_profile(self, user_profile: dict):
         user = self.__get_profile()

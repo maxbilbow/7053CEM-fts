@@ -71,3 +71,6 @@ class AuthService:
             return self.update_session()
         else:
             return None
+
+    def is_authenticated(self):
+        return self.get_authenticated_user() is not None
