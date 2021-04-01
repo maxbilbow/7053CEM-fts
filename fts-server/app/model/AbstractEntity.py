@@ -3,6 +3,7 @@ from abc import abstractmethod
 
 
 class AbstractEntity:
+    id: str
 
     @staticmethod
     @abstractmethod
@@ -12,4 +13,3 @@ class AbstractEntity:
     @abstractmethod
     def to_dict(self) -> dict:
         pass
-

@@ -5,7 +5,6 @@ from app.model.AbstractEntity import AbstractEntity
 
 
 class User(AbstractEntity):
-    id: str
     email: str
     name: str
     competencies: List[str]
@@ -31,6 +30,8 @@ class User(AbstractEntity):
 
     def to_dict(self) -> dict:
         return dict(
+            id=self.id,
+            name=self.name,
             email=self.email,
             competencies=self.competencies,
             interests=self.interests

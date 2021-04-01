@@ -5,7 +5,7 @@ from flask import jsonify
 from injector import singleton
 import uuid
 
-from typing import Callable, Iterable
+from typing import Callable, Iterable, Optional
 
 from app.database.MongoDB import MongoDb
 from app.database.Database import Database
@@ -24,15 +24,9 @@ class MongoDatabase(Database):
         table = MongoDb.table(table_name)
         return list(table.find({"id": {"$in": id_list}}, projection={"_id": 0}))
 
-    def find_by_id(self, table_name: str, entity_id: str) -> dict:
+    def find_one_by_props(self, table_name: str, props: dict) -> Optional[dict]:
         if not (table_name in MongoDb.collection_names()):
-            return dict()
-        table = MongoDb.table(table_name)
-        return table.find_one({"id": entity_id}, {"_id": 0})
-
-    def find_one_by_props(self, table_name: str, props: dict) -> dict:
-        if not (table_name in MongoDb.collection_names()):
-            return dict()
+            return None
         table = MongoDb.table(table_name)
         return table.find_one(props, {"_id": 0})
 
@@ -66,4 +60,3 @@ class MongoDatabase(Database):
     def find_all(self, table_name: str) -> Iterable:
         table = MongoDb.table(table_name)
         return table.find(projection={"_id": 0})
-

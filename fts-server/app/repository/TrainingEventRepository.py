@@ -5,7 +5,7 @@ from app.model.TrainingEvent import TrainingEvent
 from app.repository.AbstractRepository import AbstractRepository, TableConfig, Entity
 from config import Config
 
-TABLE = Config.get("database.table.courses")
+TABLE = Config.get("database.table.training_events")
 
 
 @singleton

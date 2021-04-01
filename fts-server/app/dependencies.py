@@ -5,6 +5,8 @@ import app.rest.TrainingEventResource
 import app.rest.IndexController
 import app.rest.DbRestTest
 import app.rest.AuthController
+import app.rest.SkillResource
+import app.rest.UserResourse
 from app.database.Database import Database
 from app.database.mongo import MongoDatabase
 

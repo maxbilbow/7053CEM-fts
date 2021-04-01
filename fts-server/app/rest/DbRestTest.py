@@ -12,7 +12,7 @@ from app.rest.decorators import dev_only
 @app.route("/test/drop/<collection>", methods=['GET'])
 @dev_only
 def drop_all(collection: str):
-    MongoDb()._db.drop_collection(collection)
+    MongoDb().db.drop_collection(collection)
 
     return "DONE"
 

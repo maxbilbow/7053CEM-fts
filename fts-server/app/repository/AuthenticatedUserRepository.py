@@ -12,14 +12,10 @@ TABLE = Config.get("database.table.users")
 
 
 @singleton
-class AuthenticatedUserRepository(AbstractRepository):
+class AuthenticatedUserRepository(AbstractRepository[AuthenticatedUser]):
     @staticmethod
     def from_dict(d: dict) -> AuthenticatedUser:
         return AuthenticatedUser.from_dict(d)
-
-    @staticmethod
-    def to_dict(d: AuthenticatedUser) -> dict:
-        return d.to_dict()
 
     @inject
     def __init__(self, database: Database):

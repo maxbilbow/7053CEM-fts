@@ -9,6 +9,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/react-fontawesome": "^0.1.11",
+    "@pathofdev/react-tag-input": "^1.0.7",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
@@ -19,11 +20,15 @@
     "connect-api-mocker": "^1.9.0",
     "lodash": "^4.17.20",
     "react": "^16.13.1",
+    "react-dnd": "^14.0.2",
+    "react-dnd-html5-backend": "^14.0.0",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3",
+    "react-scripts": "4.0.3",
     "ts-node": "^9.0.0",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "react-tag-input": "4.8.1",
+    "@types/react-tag-input": "^6.1.2"
   },
   "proxy": "http://localhost:5000",
   "scripts": {

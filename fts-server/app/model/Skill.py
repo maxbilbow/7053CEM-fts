@@ -6,14 +6,13 @@ from app.model.AbstractEntity import AbstractEntity
 
 
 class Skill(AbstractEntity):
-    id: str
     display_name: str
     aliases: List[str]
 
-    def __init__(self, id:str, display_name: str):
+    def __init__(self, id: str, display_name: str, aliases: List[str] = None):
         self.id = id
         self.display_name = display_name
-        self.aliases = list()
+        self.aliases = aliases if aliases is not None else list()
 
     @staticmethod
     def from_dict(d: dict) -> Skill:

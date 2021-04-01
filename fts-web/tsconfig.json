@@ -18,7 +18,8 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react",
-    "checkJs": true
+    "checkJs": true,
+    "noFallthroughCasesInSwitch": true
   },
   "include": [
     "src"

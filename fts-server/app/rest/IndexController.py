@@ -7,7 +7,8 @@ from app.rest.decorators import login_required
 
 @app.route("/")
 @app.route("/course-list")
-def home():
+@app.route("/course-info/<ignored>")
+def home(ignored: str):
     return render_template('index.html')
 
 
@@ -25,16 +26,6 @@ def manifest():
 @app.route('/favicon.ico')
 def favicon():
     return send_from_directory('../../build', 'favicon.ico')
-
-
-@app.route('/logo192.png')
-def logo192():
-    return send_from_directory('../../build', 'logo192.png')
-
-
-@app.route('/logo512.png')
-def logo512():
-    return send_from_directory('../../build', 'logo512.png')
 
 
 @app.route('/robots.txt')

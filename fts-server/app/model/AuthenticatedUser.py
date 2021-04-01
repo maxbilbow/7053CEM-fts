@@ -4,7 +4,6 @@ from app.model.AbstractEntity import AbstractEntity
 
 
 class AuthenticatedUser(AbstractEntity):
-    id: str
     password: Optional[str, None]
     email: str
 

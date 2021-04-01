@@ -1,18 +1,18 @@
+import uuid
 from typing import Optional
 
 from injector import singleton, inject
-from app.database.Database import Database
-import uuid
 
+from app.database.Database import Database
 from app.model.User import User
-from app.repository.AbstractRepository import AbstractRepository, TableConfig, Entity
+from app.repository.AbstractRepository import AbstractRepository, TableConfig
 from config import Config
 
 TABLE = Config.get("database.table.users")
 
 
 @singleton
-class UserRepository(AbstractRepository):
+class UserRepository(AbstractRepository[User]):
 
     @staticmethod
     def from_dict(d: dict) -> User:

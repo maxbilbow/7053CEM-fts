@@ -11,9 +11,8 @@ class Database:
     def transaction(self, fn: Callable[[], None]):
         pass
 
-    @abstractmethod
-    def find_by_id(self, table_name: str, key: str) -> Optional[dict]:
-        pass
+    def find_by_id(self, table_name: str, id: str) -> Optional[dict]:
+        return self.find_one_by_props(table_name, {"id": id})
 
     @abstractmethod
     def find_one_by_props(self, table_name: str, props: dict) -> Optional[dict]:

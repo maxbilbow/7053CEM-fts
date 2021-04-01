@@ -3,3 +3,8 @@ export enum SkillLevel {
     Medium = 1,
     High = 2
 }
+
+export class Skill {
+    constructor(public id: string, public displayName: string) {
+    }
+}

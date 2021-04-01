@@ -6,7 +6,7 @@ export default class UserProfileService {
     }
 
     static async updateProfile(profile: UserProfile) {
-        const result = await fetch("/api/user-profile",{
+        const result = await fetch("/api/user-profile", {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
@@ -14,6 +14,8 @@ export default class UserProfileService {
             },
             body: JSON.stringify({
                 data: {
+                    id: "user-profile",
+                    type: "update",
                     attributes: {
                         profile
                     }

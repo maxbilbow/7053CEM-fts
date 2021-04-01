@@ -7,7 +7,8 @@ interface CourseHistory {
 
 export interface UserProfile {
     name: string;
-    skills: {[skill: string]: SkillLevel};
-    history: CourseHistory
+    email: string;
+    competencies: string[];
+    interests: string[];
 }
 

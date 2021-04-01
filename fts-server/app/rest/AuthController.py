@@ -9,9 +9,10 @@ import logging
 from app.rest.decorators import logout_required, login_required
 
 
+@inject
 @app.route("/auth/status", methods=["GET"])
-def get_auth_status():
-    user = AuthService.get_authenticated_user()
+def get_auth_status(service: AuthService):
+    user = service.get_authenticated_user()
     if user is not None:
         return jsonify({
             "authenticated": True
@@ -51,14 +52,15 @@ def login(auth_service: AuthService):
             request.form.get('email'),
             request.form.get('password')
         )
-        return get_auth_status(), status.HTTP_202_ACCEPTED
+        return get_auth_status(auth_service), status.HTTP_202_ACCEPTED
     except AuthError as ae:
-        logging.error(ae)
+        logging.exception(ae)
         return jsonify({
             "error": str(ae)
         }), status.HTTP_400_BAD_REQUEST
     except Exception as e:
-        logging.error(e)
+        logging.exception(e)
+        auth_service.logout()
         return jsonify({
             "data": {
                 "id": "review",
@@ -81,7 +83,7 @@ def register(auth_service: AuthService):
             request.form.get('email'),
             request.form.get('password')
         )
-        return get_auth_status(), status.HTTP_201_CREATED
+        return get_auth_status(auth_service), status.HTTP_201_CREATED
     except AuthError as ae:
         logging.exception("Authentication Error")
         return jsonify({

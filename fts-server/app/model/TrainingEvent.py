@@ -8,7 +8,6 @@ from app.model.AbstractEntity import AbstractEntity
 
 
 class TrainingEvent(AbstractEntity):
-    id: str
     training_manager_id: Optional[str]
     start_time: int
     title: str
@@ -40,12 +39,6 @@ class TrainingEvent(AbstractEntity):
             te.outcomes = d["outcomes"]
 
         return te
-
-    def to_json(self):
-        u_dict = self.to_dict()
-        del u_dict["password"]
-        del u_dict["id"]
-        return jsonify(u_dict)
 
     def to_dict(self) -> dict:
         u_dict = dict(
