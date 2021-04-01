@@ -21,7 +21,6 @@ export class CourseListFilterState {
     searchText = ""
     orderBy = OrderBy.Relevance;
     outcomes: string[] = [];
-    prerequisites: string[] = [];
 }
 
 interface Props {
@@ -52,7 +51,7 @@ export default class CourseListFilter extends React.Component<Props, CourseListF
     }
 
     render() {
-        const {searchText, outcomes, prerequisites} = this.state;
+        const {searchText, outcomes} = this.state;
         return (
             <Form>
                 <Form.Row>
@@ -86,16 +85,6 @@ export default class CourseListFilter extends React.Component<Props, CourseListF
                                        editable={false}
                                        removeOnBackspace={true}
                                        onChange={newTags => this.updateState({outcomes: newTags})}>
-                        </ReactTagInput>
-                    </Form.Label>
-                </Form.Row>
-
-                <Form.Row>
-                    <Form.Label>Exclude Prerequisites:
-                        <ReactTagInput tags={prerequisites}
-                                       editable={false}
-                                       removeOnBackspace={true}
-                                       onChange={newTags => this.updateState({prerequisites: newTags})}>
                         </ReactTagInput>
                     </Form.Label>
                 </Form.Row>

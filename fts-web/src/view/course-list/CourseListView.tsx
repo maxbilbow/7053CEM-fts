@@ -67,12 +67,7 @@ export default class CourseListView extends React.Component<{}, CourseListViewSt
     }
 
     private filterCourseList(filteredList: Course[]) {
-        const {searchText, orderBy, prerequisites, outcomes} = this.state;
-        if (prerequisites.length) {
-            logger.info("Filtering", prerequisites)
-            filteredList = filteredList.filter(course => !CourseListView.containsAny(course.prerequisites, prerequisites))
-            logger.info("Filtering", filteredList.length)
-        }
+        const {searchText, orderBy, outcomes} = this.state;
         if (outcomes.length) {
             logger.info("Filtering", outcomes)
             filteredList = filteredList.filter(course => CourseListView.containsAny(course.outcomes, outcomes))

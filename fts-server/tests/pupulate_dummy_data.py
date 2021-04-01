@@ -46,14 +46,14 @@ def populate_users():
     auth_users.register("test@test.test", "test", login=False)
     user = users.find_user_by_email("test@test.test")
     user.name = "Baz"
-    user.competencies = ["javascript", "python"]
-    user.interests = ["c++"]
+    user.competencies = ["JavaScript", "Python"]
+    user.interests = ["C++"]
     users.update(user)
 
     auth_users.register("user@test.test", "test", login=False)
     user = users.find_user_by_email("user@test.test")
     user.name = "Bill Paxton"
-    user.competencies = ["wrestling", "python"]
+    user.competencies = ["Wrestling", "Python"]
     user.interests = ["photography"]
     users.update(user)
 
@@ -67,14 +67,8 @@ def populate_users():
 
 
 def populate_skills():
-    skills.add_skill("C++", ["cpp", "c++"])
-    skills.add_skill("JavaScript", ["js", "javascript"])
-    skills.add_skill("Python", ["python"])
-    skills.add_skill("Cheese Rolling")
-    skills.add_skill("wrestling")
-    skills.add_skill("photography")
-    skills.add_skill("ukulele")
-    skills.add_skill("chess")
+    for skill in SKILLS:
+        skills.add_skill(skill)
 
 
 def generate_random_courses(manager_id):
@@ -105,7 +99,7 @@ def populate_events(manager_id: str):
     in2Days = TrainingEvent(title="Starts in 2 days")
     in2Days.synopsis = "This event is happening in 2 days time. You will have no trouble booking it."
     in2Days.start_time = now + ONE_DAY * 2
-    in2Days.outcomes = ["python", "c++"]
+    in2Days.outcomes = ["Python", "C++"]
     in2Days.prerequisites = ["ukulele"]
     in2Days.training_manager_id = manager_id
 
@@ -113,14 +107,14 @@ def populate_events(manager_id: str):
     lt24Hours.synopsis = "This is happening too soon to book. Less than 24 hours to go. Soz!"
     lt24Hours.start_time = now + ONE_HALF_DAY
     lt24Hours.outcomes = ["photography", "cheese_rolling"]
-    lt24Hours.prerequisites = ["c++"]
+    lt24Hours.prerequisites = ["C++"]
     lt24Hours.training_manager_id = manager_id
 
     yesterday = TrainingEvent(title="Event Was Yesterday")
     yesterday.synopsis = "This event happened yesterday. You can still view it but you are unable to make a booking"
     yesterday.start_time = now - ONE_DAY
     yesterday.outcomes = ["wrestling", "chess"]
-    yesterday.prerequisites = ["javascript"]
+    yesterday.prerequisites = ["JavaScript"]
     yesterday.training_manager_id = manager_id
 
     over_a_week_ago = TrainingEvent(title="Over a week ago")
