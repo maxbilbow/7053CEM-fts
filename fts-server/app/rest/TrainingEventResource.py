@@ -16,7 +16,7 @@ def get_all_for_current_user(course_service: TrainingEventService):
 @inject
 @app.route("/api/course-list", methods=['GET'])
 def get_all(course_service: TrainingEventService):
-    return jsonify(course_service.get_all()), status.HTTP_200_OK
+    return jsonify(course_service.find_all_within_days()), status.HTTP_200_OK
 
 
 @inject

@@ -1,4 +1,5 @@
 import logging
+import time
 from typing import List, Iterable
 
 from injector import inject, singleton
@@ -8,6 +9,12 @@ from app.model.User import User
 from app.repository.TrainingEventRepository import TrainingEventRepository
 from app.service.AuthService import AuthService
 from app.service.UserService import UserService
+
+ONE_DAY_IN_MILLIS = 86400000
+
+
+def now_millis():
+    return int(round(time.time() * 1000))
 
 
 @singleton
@@ -24,15 +31,24 @@ class TrainingEventService:
         course_id_list = list(map(lambda course: course["id"], course_list))
         return list(gen(self.__repository.find_with_id_list(course_id_list)))
 
-    def get_all(self) -> List[dict]:
-        te_list = self.__repository.find_all()
-        logging.info(te_list)
-        results = self.__repository.find_all()
+    def find_all_within_days(self, days: int = 7) -> List[dict]:
+        """
+         Returns all events not older than 1 week
+        """
+        limit = now_millis() - days * ONE_DAY_IN_MILLIS
+        results = self.__repository.find_many_by_props({"startTime": {"$gt": limit}})
+        return self.__prepare_list(results)
+
+    def __prepare_list(self, results: Iterable[TrainingEvent]) -> List[dict]:
         if self.__auth_service.is_authenticated():
             user = self.__user_service.get_profile()
             return list(generate_with_relevance(results, user))
         else:
             return list(gen(results))
+
+    def get_all(self) -> List[dict]:
+        results = self.__repository.find_all()
+        return self.__prepare_list(results)
 
     def find_by_id(self, id: str) -> dict:
         return self.__repository.find_by_id(id).to_dict()

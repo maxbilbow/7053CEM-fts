@@ -14,6 +14,7 @@ SKILLS = ["C++",
           "JavaScript",
           "Python",
           "Cheese Roll",
+          "cheese_rolling",
           "wrestling",
           "photography",
           "ukulele",
@@ -22,7 +23,7 @@ SKILLS = ["C++",
           "databases",
           "sql",
           "gaming",
-          "Spring Boot"
+          "Spring Boot",
           "homebrew"]
 
 RANDOM_WORDS = ["forgotten", "private", "element", "day", "sheep", "pleasant", "hot", "see", "exciting", "yard", "star",

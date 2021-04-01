@@ -77,7 +77,7 @@ export default class CourseListView extends React.Component<{}, CourseListViewSt
             filteredList = filteredList.filter(({title}) => title.includes(searchText))
         }
         if (orderBy === OrderBy.Relevance) {
-            filteredList = filteredList.filter(({startTime}) => startTime < Date.now());
+            filteredList = filteredList.filter(({startTime}) => startTime > Date.now());
         }
         const order = orderBy === OrderBy.Relevance ? ["relevance", "startTime"] : ["startTime", "relevance"];
         return _.orderBy(filteredList, order);
@@ -95,7 +95,7 @@ export default class CourseListView extends React.Component<{}, CourseListViewSt
                         <Table>
                             <thead>
                             <tr>
-                                <th>Filter Results</th>
+                                <th>Filter Results ({orderedList.length})</th>
                             </tr>
                             </thead>
                             <tbody>

@@ -99,28 +99,28 @@ def populate_events(manager_id: str):
     in2Days = TrainingEvent(title="Starts in 2 days")
     in2Days.synopsis = "This event is happening in 2 days time. You will have no trouble booking it."
     in2Days.start_time = now + ONE_DAY * 2
-    in2Days.outcomes = ["Python", "C++"]
+    in2Days.outcomes = ["Python", "C++", "test_case"]
     in2Days.prerequisites = ["ukulele"]
     in2Days.training_manager_id = manager_id
 
     lt24Hours = TrainingEvent(title="Less Than 24 hours")
     lt24Hours.synopsis = "This is happening too soon to book. Less than 24 hours to go. Soz!"
     lt24Hours.start_time = now + ONE_HALF_DAY
-    lt24Hours.outcomes = ["photography", "cheese_rolling"]
+    lt24Hours.outcomes = ["photography", "cheese_rolling", "test_case"]
     lt24Hours.prerequisites = ["C++"]
     lt24Hours.training_manager_id = manager_id
 
     yesterday = TrainingEvent(title="Event Was Yesterday")
     yesterday.synopsis = "This event happened yesterday. You can still view it but you are unable to make a booking"
     yesterday.start_time = now - ONE_DAY
-    yesterday.outcomes = ["wrestling", "chess"]
+    yesterday.outcomes = ["wrestling", "chess", "test_case"]
     yesterday.prerequisites = ["JavaScript"]
     yesterday.training_manager_id = manager_id
 
     over_a_week_ago = TrainingEvent(title="Over a week ago")
     over_a_week_ago.synopsis = "This event is old. You shouldn't even see it"
     over_a_week_ago.start_time = now - ONE_WEEK
-    over_a_week_ago.outcomes = []
+    over_a_week_ago.outcomes = ["test_case"]
     over_a_week_ago.prerequisites = ["wrestling", "chess"]
     over_a_week_ago.training_manager_id = manager_id
 
