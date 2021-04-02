@@ -16,9 +16,6 @@ services:
     networks:
       - backend
 
-#  redis:
-#    image: "redis:alpine"
-
   mongodb:
     container_name: dis_mongodb
     image: mongo:latest

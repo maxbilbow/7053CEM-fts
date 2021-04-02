@@ -1,7 +1,8 @@
-from tests.words import make_sentence, SKILLS
+import random
+import time
+
 from app.database.MongoDB import MongoDb
 from app.database.mongo import MongoDatabase
-from app.model.Skill import Skill
 from app.model.TrainingEvent import TrainingEvent
 from app.repository.AuthenticatedUserRepository import AuthenticatedUserRepository
 from app.repository.BookingRepository import BookingRepository
@@ -11,9 +12,7 @@ from app.repository.UserRepository import UserRepository
 from app.service.AuthService import AuthService
 from app.service.SkillService import SkillService
 from app.service.TrainingEventService import TrainingEventService
-from datetime import datetime
-import time
-import random
+from tests.words import make_sentence, SKILLS
 
 db: MongoDatabase
 users: UserRepository
