@@ -2,6 +2,7 @@
 
 ## Prerequisites
 * Docker
+* docker-compose v3
 * node > v12
 * python 3
 
