@@ -7,7 +7,7 @@ from flask_testing import LiveServerTestCase
 from injector import inject
 
 from app.database.mongo import MongoDatabase
-from app.rest.SkillResource import SkillResource
+from app.rest import SkillResource
 from mock_app import create_app
 
 SKILL_LIST = [
@@ -22,18 +22,17 @@ class SkillResourceTest(LiveServerTestCase):
     def __init__(self, skill_resource: SkillResource):
         super().__init__()
         print("INJECTING", skill_resource)
-        self.skill_resource = skill_resource
 
-    # @classmethod
-    # def setUpClass(cls):
-    #     cls.env_patcher = mock.patch.dict(os.environ, {"FLASK_ENV": "development"})
-    #     cls.env_patcher.start()
-    #     super().setUpClass()
-    #
-    # @classmethod
-    # def tearDownClass(cls):
-    #     super().tearDownClass()
-    #     cls.env_patcher.stop()
+    @classmethod
+    def setUpClass(cls):
+        cls.env_patcher = mock.patch.dict(os.environ, {"FLASK_ENV": "development"})
+        cls.env_patcher.start()
+        super().setUpClass()
+
+    @classmethod
+    def tearDownClass(cls):
+        super().tearDownClass()
+        cls.env_patcher.stop()
 
     def setUp(self):
         super().setUp()
@@ -52,7 +51,8 @@ class SkillResourceTest(LiveServerTestCase):
         return app
 
     def test_that_valid_review_returns_201(self):
-        print(self.skill_resource)
+        result = self.app.get("/skill-list")
+        print(result)
 
 
 if __name__ == '__main__':
