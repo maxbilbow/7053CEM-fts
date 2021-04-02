@@ -6,25 +6,39 @@
 * node > v12
 * python 3
 
-## Building Assets:
+## Running the App
+### Building Assets:
 
  ```shell script
 sh fts-build.sh
 ```
 
-## Starting the server
+### Starting the server
 Start the server with docker-compose
  ```shell script
  docker-compose up -d
  ```
 Check all is OK by navigating to http://localhost:5000
 
-## Stopping the server
+### Generate Test Data:
+
+ ```shell script
+sh fts-generate-data.sh
+```
+
+
+### Stopping the server
  ```shell script
  docker-compose stop
  ```
 
-## Clean up
+### Clean up
  ```shell script
  docker-compose down
  ```
+
+## Testing
+Run tests on both server and web-app with:
+ ```shell script
+sh fts-test.sh
+```

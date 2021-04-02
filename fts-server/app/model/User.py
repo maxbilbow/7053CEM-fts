@@ -1,6 +1,7 @@
 from __future__ import annotations
-from flask import jsonify
-from typing import List, Optional
+
+from typing import List
+
 from app.model.AbstractEntity import AbstractEntity
 
 

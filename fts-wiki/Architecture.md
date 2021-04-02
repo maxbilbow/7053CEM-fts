@@ -8,6 +8,10 @@
 ![Server Architecture](_attachments/fts-c4-layered-design.png)
 [fts-c4-layered-design.png](_attachments/fts-c4-layered-design.png)
 
+## Web Architecture
+![Web Architecture](_attachments/mvvm.png)
+[mvvm.png](_attachments/mvvm.png)
+
 ## Request Flow
 
 ![Request Flow](_attachments/seq_relevant-courses.png)
