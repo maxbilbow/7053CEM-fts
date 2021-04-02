@@ -2,9 +2,8 @@ import React from "react";
 import LoggerFactory from "../../service/LoggerFactory";
 import {UserProfile} from "../../model/UserProfile";
 import UserProfileService from "../../service/UserProfileService";
-import {Alert, Button, Fade, Form} from "react-bootstrap";
+import {Alert, Button, Form} from "react-bootstrap";
 import SkillsService from "../../service/SkillsService";
-import {pullAt, noop, keyBy} from "lodash"
 import "@pathofdev/react-tag-input/build/index.css";
 import ReactTagInput from "@pathofdev/react-tag-input";
 import {Skill} from "../../model/Skill";
@@ -16,24 +15,22 @@ enum UpdateResult {
 }
 
 export default class UserProfileView extends React.Component<{}, UserProfile> {
-
     state!: UserProfile;
     skills: Skill[] = [];
     updateResult = UpdateResult.None;
 
-    constructor(props = {}) {
-        super(props);
-        this.load().catch(logger.error);
-    }
-
-    async load() {
+    private async load() {
         this.skills = await SkillsService.getSkills();
         const profile = await UserProfileService.getProfile();
         this.setState({...profile});
     }
 
+    componentDidMount() {
+        this.load().catch(logger.error)
+    }
+
     update = async () => {
-        const profile = this.state;
+        const profile = this.state!;
         try {
             await UserProfileService.updateProfile(profile);
             await this.load();
@@ -83,7 +80,7 @@ export default class UserProfileView extends React.Component<{}, UserProfile> {
                     <Button variant="primary" type="button" onClick={this.update}>
                         Save
                     </Button>
-                {this.alert()}
+                    {this.alert()}
                 </Form.Group>
             </Form>
         );

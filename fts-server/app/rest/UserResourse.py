@@ -15,6 +15,9 @@ logger = logging.getLogger("UserResource")
 @app.route("/api/user-profile", methods=["GET"])
 @login_required
 def get_user_profile(service: UserService):
+    """
+    Returns profile as JSON structure
+    """
     return jsonify(service.get_profile().to_dict()), status.HTTP_200_OK
 
 
@@ -22,6 +25,10 @@ def get_user_profile(service: UserService):
 @app.route("/api/user-profile", methods=["POST"])
 @login_required
 def update_user_profile(service: UserService):
+    """
+    Receives JSON API request containing a user profile object
+    :returns JSON API response
+    """
     profile, id, type = get_attributes("profile")
     try:
         logger.info("Updating profile with {}".format(profile))

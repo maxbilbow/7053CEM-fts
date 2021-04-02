@@ -1,11 +1,11 @@
 # PoiReviewResource.py
-from app.service.TrainingEventService import TrainingEventService
 from app.flask_app import app
-from injector import inject
-from flask import jsonify
-
-from flask_api import status
 from app.rest.decorators import login_required
+from app.service.TrainingEventService import TrainingEventService
+from flask import jsonify
+from flask_api import status
+from injector import inject
+
 
 @inject
 @app.route("/api/user-course-list", methods=['GET'])

@@ -1,4 +1,3 @@
-import uuid
 from typing import Optional
 
 from injector import singleton, inject
@@ -10,10 +9,8 @@ from config import Config
 
 TABLE = Config.get("database.table.users")
 
-
 @singleton
 class UserRepository(AbstractRepository[User]):
-
     @staticmethod
     def from_dict(d: dict) -> User:
         return User.from_dict(d)
@@ -26,12 +23,10 @@ class UserRepository(AbstractRepository[User]):
     def __init__(self, database: Database):
         super().__init__(database, TableConfig(TABLE))
 
-    def create_user(self, user: User):
-        user.id = uuid.uuid4().hex
-        return super().insert(user)
-
-    def insert(self, entity: User) -> str:
-        return self.create_user(entity)
-
     def find_user_by_email(self, email: str) -> Optional[User]:
+        """
+        Domain specific request
+        :param email:
+        :return: Matching user etity
+        """
         return self.find_one_by_props({"email": email})

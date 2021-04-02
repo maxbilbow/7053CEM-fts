@@ -56,10 +56,8 @@ class TrainingEventServiceTestCase(unittest.TestCase):
 
     def setUp(self) -> None:
         self.te_repo: TrainingEventRepository = MagicMock()
-
         self.user_service = MagicMock()
         self.auth_service = MagicMock()
-
         self.unit = TrainingEventService(self.te_repo, self.auth_service, self.user_service)
 
     def test_that_get_all_returns_dicts(self):
@@ -72,21 +70,21 @@ class TrainingEventServiceTestCase(unittest.TestCase):
 
     def test_that_find_within_days_returns_dicts(self):
         RESULT_COUNT = 10
-        self.te_repo.find_many_by_props = MagicMock(return_value=generate_random_courses(RESULT_COUNT))
+        self.te_repo.find_within_days = MagicMock(return_value=generate_random_courses(RESULT_COUNT))
         result = self.unit.find_all_within_days()
         self.assertIsInstance(result, list)
         self.assertEqual(len(result), RESULT_COUNT)
         self.assertIsInstance(result[1], dict)
 
     def test_that_when_logged_in_data_has_relevance(self):
-        self.te_repo.find_many_by_props = MagicMock(return_value=generate_random_courses(1))
+        self.te_repo.find_within_days = MagicMock(return_value=generate_random_courses(1))
         self.auth_service.is_authenticated = MagicMock(return_value=True)
         self.user_service.get_profile = MagicMock(return_value=mock_user())
         result = self.unit.find_all_within_days()
         self.assertIsInstance(result[0]["relevance"], float)
 
     def test_that_when_not_logged_in_data_does_not_have_relevance(self):
-        self.te_repo.find_many_by_props = MagicMock(return_value=generate_random_courses(1))
+        self.te_repo.find_within_days = MagicMock(return_value=generate_random_courses(1))
         self.auth_service.is_authenticated = MagicMock(return_value=False)
         self.user_service.get_profile = MagicMock(return_value=mock_user())
         result = self.unit.find_all_within_days()
@@ -112,7 +110,7 @@ class TrainingEventServiceTestCase(unittest.TestCase):
 
     def test_that_missing_prerequisites_decrease_relevance(self):
         event = next(generate_random_courses(1))
-        event.prerequisites = ["c1, c2"]
+        event.prerequisites = ["c1", "c2"]
         event.outcomes = []
         user = mock_user()
         user.interests = []

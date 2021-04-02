@@ -26,17 +26,19 @@ class TrainingEventService:
         self.__user_service = user_service
 
     def get_all_for_current_user(self) -> list:
-        user_id = self.__auth_service.get_authenticated_user()["id"]
-        course_list = self.repository.get_by_user_id(user_id)
-        course_id_list = list(map(lambda course: course["id"], course_list))
-        return list(gen(self.__repository.find_with_id_list(course_id_list)))
+        """
+        Returns a list of courses managed by the current user
+        """
+        training_manager_id = self.__auth_service.get_authenticated_user()["id"]
+        course_list = self.__repository.find_many_by_props({"trainingManagerId": training_manager_id})
+        return list(gen(course_list))
 
     def find_all_within_days(self, days: int = 7) -> List[dict]:
         """
-         Returns all events not older than 1 week
+         Returns all events not older than 1 week (default)
         """
         limit = now_millis() - days * ONE_DAY_IN_MILLIS
-        results = self.__repository.find_many_by_props({"startTime": {"$gt": limit}})
+        results = self.__repository.find_within_days(days)
         return self.__prepare_list(results)
 
     def __prepare_list(self, results: Iterable[TrainingEvent]) -> List[dict]:

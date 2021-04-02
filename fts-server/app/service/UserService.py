@@ -16,6 +16,12 @@ class UserService:
         self.__auth_service = auth_service
 
     def __get_profile(self) -> User:
+        """
+        Uses the auth service to determine the current user
+        and pulls their profile from the database
+
+        If, unlikely, there is user in the system then the session is cleared and an exception is thrown
+        """
         user_id = self.__auth_service.get_authenticated_user()["id"]
         user = self.__repository.find_by_id(user_id)
         if user is None:
@@ -27,6 +33,13 @@ class UserService:
         return self.__get_profile()
 
     def update_profile(self, user_profile: dict):
+        """
+        Rather than storing the JSON as-is (which could be corrupt)
+        we convert to a structured obeject which is then sent to the repository layer
+
+        :param user_profile:
+        :return: update user response
+        """
         user = self.__get_profile()
         user.email = user_profile["email"]
         user.name = user_profile["name"]

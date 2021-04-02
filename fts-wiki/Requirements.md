@@ -41,12 +41,52 @@ Feature: F1: Apply for training events
 
 ```
 
-### F2 - Daily Emails
+### F2 - Training Recommendation
 ```gherkin
+Feature: F2 - Course Recommendation
+
+  Scenario: F2.1 - Update Profile
+    Given that I am logged in
+     When I view my profile
+     Then I can add and remove interests
+      And I can add and remove skills
+      And I can save my profile
+  
+  Scenario: F2.2 - Recommended Events based on profile
+    Given that I have specified skills and interests in my profile
+      And I am vieing the event list
+     When I select "show recommended"
+     Then I am presented with events that best fit my profile first
+  
+  Scenario: F2.3 - Recommended Events based on history
+    Given that I have registered for certain events
+      And I am vieing the event list
+     When I select "show recommended"
+     Then I am presented with events that are similar to my event history
+  
+  Scenario: F2.4 - Recommended Events based on similar profiles
+    Given that I have registered for certain events
+      And that I have specified skills and interests in my profile
+     When I am view the event list
+      And I select "show recommended"
+     Then I am presented with events that relate to the history and interests of users with similar profiles
+  
 
 ```
 
-### F3 - Training Recommendation
+### F2 - Daily Emails (Stretch)
 ```gherkin
+Feature: F3 - Training Emails
 
+  Scenario: F3.1 Daily Emails
+    Given that am an event manager
+     When new attendees enroll for my events
+     Then I will receive a daily email sumamry
 ```
+
+# Non-functional Requirements
+
+The application should be:
+* easy to expand
+* easily hosted on distributed systems
+* react quickly

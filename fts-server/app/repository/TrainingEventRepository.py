@@ -21,3 +21,6 @@ class TrainingEventRepository(AbstractRepository[TrainingEvent]):
     @inject
     def __init__(self, database: Database):
         super().__init__(database, TableConfig(TABLE))
+
+    def find_within_days(self, days: int):
+        return self.find_many_by_props({"startTime": {"$gt": days}})
