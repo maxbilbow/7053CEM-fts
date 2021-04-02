@@ -1,13 +1,29 @@
-# 7053CEM-ft
+# 7053CEM-fts Course Finder
 
-## Build Steps:
- #### 1. Build [fts-server-jsonschema2pojo-plugin](fts-server-jsonschema2pojo-plugin)
+## Prerequisites
+* Docker
+* node > v12
+* python 3
+
+## Building Assets:
+
  ```shell script
-cd fts-server-jsonschema2pojo-plugin
-mvn clean install package
+sh fts-build.sh
 ```
- #### 2. Build [fts-server-platform](fts-server-platform)
-  ```shell script
- cd fts-server-platform
- mvn clean install
+
+## Starting the server
+Start the server with docker-compose
+ ```shell script
+ docker-compose up -d
+ ```
+Check all is OK by navigating to http://localhost:5000
+
+## Stopping the server
+ ```shell script
+ docker-compose stop
+ ```
+
+## Clean up
+ ```shell script
+ docker-compose down
  ```

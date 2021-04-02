@@ -53,6 +53,24 @@ class TrainingEventService:
     def find_by_id(self, id: str) -> dict:
         return self.__repository.find_by_id(id).to_dict()
 
+    @staticmethod
+    def get_relevance_score(te: TrainingEvent, user: User) -> float:
+        score = float(0)
+        interests_matched = len(set(te.outcomes) & set(user.interests))
+        prerequisites_matched = len(set(te.prerequisites) & set(user.competencies))
+        if len(te.prerequisites) > 0:
+            percentage_missed = 1.0 - float(prerequisites_matched) / len(te.prerequisites)
+            score -= percentage_missed
+            logging.info("{} prerequisites missing".format(percentage_missed))
+
+        if len(user.interests) > 0:
+            percentage_found = float(interests_matched) / len(user.interests)
+            logging.info("{} outcomes found".format(percentage_found))
+            score += percentage_found
+
+        logging.info("Relevance score of {} given".format(score))
+        return score
+
 
 def gen(te_it: Iterable[TrainingEvent]):
     for o in te_it:
@@ -62,23 +80,8 @@ def gen(te_it: Iterable[TrainingEvent]):
 def generate_with_relevance(it: Iterable[TrainingEvent], user: User):
     for o in it:
         te = o.to_dict()
-        te["relevance"] = get_relevance_score(o, user)
+        te["relevance"] = TrainingEventService.get_relevance_score(o, user)
         yield te
 
 
-def get_relevance_score(te: TrainingEvent, user: User) -> float:
-    score = float(0)
-    interests_matched = len(set(te.outcomes) & set(user.interests))
-    prerequisites_matched = len(set(te.prerequisites) & set(user.competencies))
-    if len(te.prerequisites) > 0:
-        percentage_missed = 1.0 - float(prerequisites_matched) / len(te.prerequisites)
-        score -= percentage_missed
-        logging.info("{} prerequisites missing".format(percentage_missed))
 
-    if len(user.interests) > 0:
-        percentage_found = float(interests_matched) / len(user.interests)
-        logging.info("{} outcomes found".format(percentage_found))
-        score += percentage_found
-
-    logging.info("Relevance score of {} given".format(score))
-    return score
