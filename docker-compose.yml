@@ -1,8 +1,9 @@
 version: "3.9"
 services:
   fts-server:
+    image: maxbilbow/fts-server
     container_name: fts-server
-    build: .
+#    build: .
     ports:
       - "5000:5000"
     volumes:

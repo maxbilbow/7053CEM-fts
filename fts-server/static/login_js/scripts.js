@@ -10,7 +10,7 @@ $("form[name=signup_form").submit(function(e) {
     data: data,
     dataType: "json",
     success: function(resp) {
-      window.location.href = "/";
+      window.location.href = "/user-profile";
     },
     error: function(resp) {
       var error = resp.responseJSON ? resp.responseJSON.error : "Unknown Error";

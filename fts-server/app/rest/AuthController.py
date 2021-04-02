@@ -4,7 +4,7 @@ from flask import request, render_template, jsonify, redirect
 from flask_api import status
 from injector import inject
 from app.service.AuthService import AuthService
-from app.sdp_errors import AuthError
+from app.app_errors import AuthError
 import logging
 from app.rest.decorators import logout_required, login_required
 
