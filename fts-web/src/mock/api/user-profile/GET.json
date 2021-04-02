@@ -1,0 +1,6 @@
+{
+  "name": "Bob",
+  "skills": ["A"],
+  "interests": ["B", "C"],
+  "email": "bob@bob.bob"
+}

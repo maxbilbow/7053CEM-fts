@@ -1,0 +1,24 @@
+.Loading Spinner {
+  width: 200px;
+}
+
+.Loading .spinner-border {
+  width: 10rem !important;
+  height: 10rem !important;
+  margin-bottom: 30px;
+  color: #c9143e;
+}
+
+.Loading {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.Loading p {
+  font-size: 30px;
+  font-weight: 200;
+  color: black;
+}

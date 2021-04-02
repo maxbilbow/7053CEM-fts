@@ -1,0 +1,13 @@
+database:
+  name: fts_alpha
+  table:
+    users: users
+    training_events: training_events
+    skills: skills
+    bookings: bookings
+
+  mongodb:
+    credentials: root:password@mongodb
+    port: 27017
+
+
