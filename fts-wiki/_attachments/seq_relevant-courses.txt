@@ -1,0 +1,24 @@
+
+actor Authenticated User
+participant Web-App
+control Rest Entpoint
+
+participant Service Layer
+
+participant Auth Context
+
+participant Repository Layer
+database MongoDB
+
+Authenticated User->Web-App: Navigates to course list page
+Web-App->Rest Entpoint:Sends JSON API request\n[GET /api/course-list]
+Rest Entpoint->Auth Context:Checks Authentication
+Rest Entpoint->Service Layer:Requests specific data based on request
+Service Layer->Repository Layer:Requests Specific Data
+Repository Layer->MongoDB:Gets data from
+Repository Layer<-MongoDB:Returns JSON data
+Service Layer<-Repository Layer:Returns Entity
+Service Layer->Service Layer:Prepares and filters data
+Rest Entpoint<-Service Layer:Sends JSON data
+Web-App<-Rest Entpoint:Sends course list
+Authenticated User<-Web-App:Displays list with UI filters

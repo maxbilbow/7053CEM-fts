@@ -1,14 +1,12 @@
 # Data Model
 
+![](../_attachments/entity-rel.png)
+
 ## Main Entities
 - TrainingEvent
 - Skill/Technology
 - Booking
 - User
-
-## Secondary Entities
-- Competency
-- Prerequisite
 
 ## Entity Detail
 ### User
@@ -17,7 +15,7 @@
 |id|string|uniqueId never sent to the front end
 |email|string|unique and used for login
 |password|hash|
-|Competencies|List\<Competency\>|list of self-identified capabilities
+|Competencies|List\<Skill\>|list of self-identified capabilities
 |Interests|List\<Skill\>|
 
 ### Skill (Skill/Technology)
@@ -42,8 +40,8 @@
 |startTime|long|
 |title|string|
 |synopsis|string|
-|prerequisites|List<Competency>|
-|outcomes|List<Competency>|
+|prerequisites|List<Skill>|
+|outcomes|List<Skill>|
 |attendees|List<User>|
 
 ## Booking
@@ -51,17 +49,3 @@
 |---|---|---|
 |trainingEvent|TrainingEvent|FK: trainingEvent.id|
 |user|User|FT: user.id
-
-### Competency
-| Property | Type|details |
-|---|---|---|
-|skill|Skill|FK: skill.id|
-|level|enum (number)| skill level, say from 1 to 5
-|user|User|FK: user.id
-
-### Prerequisite
-| Property | Type|details |
-|---|---|---|
-|skill|Skill|FK: skill.id|
-|level|enum (number)| skill level, say from 1 to 5
-|trainingEvent|TrainingEvent|FK: trainingEvent.id
