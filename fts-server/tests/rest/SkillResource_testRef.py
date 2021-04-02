@@ -13,7 +13,7 @@ from mock_app import create_app
 SKILL_LIST = [
     {"id": "skill-id", "displayName": "Skill Name", "aliases": ["bob"]}
 ]
-
+EXPECTED_JSON_RESPONSE = {}
 
 @mock.patch.dict(os.environ)
 class SkillResourceTest(LiveServerTestCase):
@@ -52,7 +52,7 @@ class SkillResourceTest(LiveServerTestCase):
 
     def test_that_valid_review_returns_201(self):
         result = self.app.get("/skill-list")
-        print(result)
+        self.assertEqual(result, EXPECTED_JSON_RESPONSE)
 
 
 if __name__ == '__main__':
